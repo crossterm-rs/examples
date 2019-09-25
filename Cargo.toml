@@ -1,0 +1,6 @@
+[workspace]
+members = [
+    "examples",
+    "first-depth-search",
+    "snake"
+]
