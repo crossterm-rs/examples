@@ -8,12 +8,13 @@ use std::{
 };
 
 use crossterm::{
-    queue, style, AlternateScreen, Clear, ClearType, Color, Crossterm, Goto, Output,
-    PrintStyledFont, Result,
+    queue, style, AlternateScreen, Clear, ClearType, Color, Goto, Hide, Output, PrintStyledFont,
+    Result, Show,
 };
 
 fn print_wait_screen() -> Result<()> {
     let mut stdout = stdout();
+    queue!(stdout, Hide)?;
     queue!(stdout, Clear(ClearType::All))?;
     queue!(stdout, Goto(0, 0))?;
     queue!(
@@ -43,17 +44,14 @@ fn print_wait_screen() -> Result<()> {
         // 1 second delay
         thread::sleep(time::Duration::from_secs(1));
     }
+    queue!(stdout, Show)?; // we must restore the cursor
     Ok(())
 }
 
 /// print wait screen on alternate screen, then switch back.
 fn print_wait_screen_on_alternate_window() -> Result<()> {
     let _alt = AlternateScreen::to_alternate(false)?;
-    let crossterm = Crossterm::new();
-    let cursor = crossterm.cursor();
-    cursor.hide()?;
-    print_wait_screen()?;
-    cursor.show() // we must restore the cursor
+    print_wait_screen()
 }
 
 // cargo run --bin alternate_screen_command
