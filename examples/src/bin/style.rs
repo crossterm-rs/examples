@@ -118,11 +118,7 @@ fn print_all_foreground_colors_with_enum() {
 
 /// Print all available foreground colors | demonstration.
 fn print_all_foreground_colors_with_method() {
-    println!(
-        "Black : \t\t       {} {}\n",
-        "■".black(),
-        Attribute::Reset
-    );
+    println!("Black : \t\t       {} {}\n", "■".black(), Attribute::Reset);
     println!(
         "DarkGrey : \t\t     {} {}\n",
         "■".dark_grey(),
@@ -140,11 +136,7 @@ fn print_all_foreground_colors_with_method() {
         "■".dark_cyan(),
         Attribute::Reset
     );
-    println!(
-        "Green : \t\t       {} {}\n",
-        "■".green(),
-        Attribute::Reset
-    );
+    println!("Green : \t\t       {} {}\n", "■".green(), Attribute::Reset);
     println!(
         "DarkGreen : \t\t   {} {}\n",
         "■".dark_green(),
@@ -166,22 +158,14 @@ fn print_all_foreground_colors_with_method() {
         "■".dark_magenta(),
         Attribute::Reset
     );
-    println!(
-        "Yellow : \t\t      {} {}\n",
-        "■".yellow(),
-        Attribute::Reset
-    );
+    println!("Yellow : \t\t      {} {}\n", "■".yellow(), Attribute::Reset);
     println!(
         "DarkYellow : \t\t  {} {}\n",
         "■".dark_yellow(),
         Attribute::Reset
     );
     println!("Grey : \t\t        {} {}\n", "■".grey(), Attribute::Reset);
-    println!(
-        "White : \t\t       {} {}\n",
-        "■".white(),
-        Attribute::Reset
-    );
+    println!("White : \t\t       {} {}\n", "■".white(), Attribute::Reset);
 }
 
 /// Print all available foreground colors | demonstration.
@@ -293,11 +277,7 @@ fn print_all_background_colors_with_method() {
         "■".on_dark_grey(),
         Attribute::Reset
     );
-    println!(
-        "Red : \t\t         {} {}\n",
-        "■".on_red(),
-        Attribute::Reset
-    );
+    println!("Red : \t\t         {} {}\n", "■".on_red(), Attribute::Reset);
     println!(
         "DarkRed : \t\t     {} {}\n",
         "■".on_dark_red(),
