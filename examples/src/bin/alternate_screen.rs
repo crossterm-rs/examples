@@ -29,7 +29,7 @@ fn print_wait_screen() -> Result<()> {
         // 1 second delay
         thread::sleep(time::Duration::from_secs(1));
     }
-
+    cursor.show()?; // we must restore the cursor
     Ok(())
 }
 
@@ -39,7 +39,7 @@ fn print_wait_screen_on_alternate_window() -> Result<()> {
     print_wait_screen()
 }
 
-// cargo run --example alternate_screen
+// cargo run --bin alternate_screen
 fn main() -> Result<()> {
     print_wait_screen_on_alternate_window()
 }
