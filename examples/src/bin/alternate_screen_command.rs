@@ -8,53 +8,56 @@ use std::{
 };
 
 use crossterm::{
-    queue, style, AlternateScreen, Clear, ClearType, Color, Goto, Hide, Output, PrintStyledFont,
-    Result, Show,
+    queue, style, Clear, ClearType, Color, EnterAlternateScreen, Goto, Hide, LeaveAlternateScreen,
+    Output, PrintStyledFont, Result, Show,
 };
 
-fn print_wait_screen() -> Result<()> {
-    let mut stdout = stdout();
-    queue!(stdout, Hide)?;
-    queue!(stdout, Clear(ClearType::All))?;
-    queue!(stdout, Goto(0, 0))?;
+/// manage the wait screen, using the provided Writer, which
+/// may typically be stdout or stderr.
+fn print_wait_screen<W>(w: &mut W) -> Result<()>
+where
+    W: Write,
+{
+    queue!(w, EnterAlternateScreen)?;
+    queue!(w, Hide)?;
+    queue!(w, Clear(ClearType::All))?;
+    queue!(w, Goto(0, 0))?;
     queue!(
-        stdout,
+        w,
         Output(
             "Welcome to the wait screen.\n\
-             Please wait a few seconds until we arrive back at the main screen.\n\
+             Please wait a few seconds until we quit the application.\n\
              Progress: "
                 .to_string(),
         )
     )?;
-    stdout.flush()?;
+    w.flush()?;
     // print some progress example.
     let items = 5;
     for i in 1..=items {
         // print the current counter at the line of `Seconds to Go: {counter}`
-        queue!(stdout, Goto(10, 2))?;
+        queue!(w, Goto(10, 2))?;
         queue!(
-            stdout,
+            w,
             PrintStyledFont(
                 style(format!("{} of the {} items processed", i, items))
                     .with(Color::Red)
                     .on(Color::Blue)
             )
         )?;
-        stdout.flush()?;
+        w.flush()?;
         // 1 second delay
         thread::sleep(time::Duration::from_secs(1));
     }
-    queue!(stdout, Show)?; // we must restore the cursor
+    queue!(w, Show)?; // we must restore the cursor
+    queue!(w, LeaveAlternateScreen)?;
+    w.flush()?;
     Ok(())
 }
 
-/// print wait screen on alternate screen, then switch back.
-fn print_wait_screen_on_alternate_window() -> Result<()> {
-    let _alt = AlternateScreen::to_alternate(false)?;
-    print_wait_screen()
-}
-
-// cargo run --bin alternate_screen_command
-fn main() -> Result<()> {
-    print_wait_screen_on_alternate_window()
+// Run with:
+//    cargo run --bin alternate_screen_command
+fn main() {
+    let mut stdout = stdout();
+    print_wait_screen(&mut stdout).unwrap();
 }
