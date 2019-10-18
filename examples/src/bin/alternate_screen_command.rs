@@ -12,6 +12,8 @@ use crossterm::{
     Output, PrintStyledFont, Result, Show,
 };
 
+/// manage the wait screen, using the provided Writer, which
+/// may typically be stdout or stderr.
 fn print_wait_screen<W>(w: &mut W) -> Result<()>
 where
     W: Write,
@@ -24,7 +26,7 @@ where
         w,
         Output(
             "Welcome to the wait screen.\n\
-             Please wait a few seconds until we arrive back at the main screen.\n\
+             Please wait a few seconds until we quit the application.\n\
              Progress: "
                 .to_string(),
         )
@@ -38,7 +40,7 @@ where
         queue!(
             w,
             PrintStyledFont(
-                style(format!("{} of the {} bip items processed", i, items))
+                style(format!("{} of the {} items processed", i, items))
                     .with(Color::Red)
                     .on(Color::Blue)
             )
@@ -49,17 +51,13 @@ where
     }
     queue!(w, Show)?; // we must restore the cursor
     queue!(w, LeaveAlternateScreen)?;
+    w.flush()?;
     Ok(())
 }
 
-/// print wait screen on alternate screen, then switch back.
-fn print_wait_screen_on_alternate_window() -> Result<()> {
-    let mut stdout = stdout();
-    // note that we might have used stderr instead of stdout here
-    print_wait_screen(&mut stdout)
-}
-
-// cargo run --bin alternate_screen_command
+// Run with:
+//    cargo run --bin alternate_screen_command
 fn main() {
-    print_wait_screen_on_alternate_window().unwrap();
+    let mut stdout = stdout();
+    print_wait_screen(&mut stdout).unwrap();
 }
