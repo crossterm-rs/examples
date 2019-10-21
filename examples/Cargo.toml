@@ -12,4 +12,4 @@ readme = "README.md"
 edition = "2018"
 
 [dependencies]
-crossterm = { git = "https://github.com/crossterm-rs/crossterm", branch = "master", version = "0.11" }
+crossterm = { version = "0.12" }
