@@ -2,6 +2,8 @@
 
 # Crossterm Examples
 
+The examples are compatible with the latest release. When you work with the master branch, checkout the pull request list for up-to-date examples. 
+
 ## Structure
 
 ```
