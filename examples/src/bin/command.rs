@@ -3,7 +3,10 @@
 use std::io::{stdout, Write};
 
 use crossterm::{
-    execute, queue, Clear, ClearType, ExecutableCommand, Goto, Output, QueueableCommand, Result,
+    cursor::MoveTo,
+    execute, queue,
+    terminal::{Clear, ClearType},
+    ExecutableCommand, Output, QueueableCommand, Result,
 };
 
 /// execute commands by using normal functions
@@ -42,7 +45,7 @@ fn later_execution_command_using_functions() -> Result<()> {
     // multiple commands
     sdout
         .queue(Clear(ClearType::All))?
-        .queue(Goto(5, 5))?
+        .queue(MoveTo(5, 5))?
         .queue(Output(
             "console cleared, and moved to coord X: 5 Y: 5 ".to_string(),
         ))?;
@@ -66,11 +69,11 @@ fn later_execution_command_directly_using_macros() -> Result<()> {
     queue!(
         stdout,
         Clear(ClearType::All),
-        Goto(5, 5),
+        MoveTo(5, 5),
         Output("console cleared, and moved to coord X: 5 Y: 5 ".to_string())
     )?;
 
-    ::std::thread::sleep(std::time::Duration::from_millis(2000));
+    std::thread::sleep(std::time::Duration::from_millis(2000));
 
     // when you call this all commands will be executed
     stdout.flush()?;

@@ -9,7 +9,7 @@
 use std::io::{stderr, Write};
 
 use crossterm::{
-    input, queue, EnterAlternateScreen, Goto, Hide, LeaveAlternateScreen, Output, RawScreen,
+    input, queue, EnterAlternateScreen, Hide, LeaveAlternateScreen, MoveTo, Output, RawScreen,
     Result, Show,
 };
 

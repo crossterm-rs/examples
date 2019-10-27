@@ -1,3 +1,5 @@
+//! DEPRECATED API, please don't use `Crossterm` directly
+
 // Remove once the TODO below is fixed
 #![allow(unused_variables)]
 
@@ -10,9 +12,7 @@ fn main() {
     let crossterm = Crossterm::new();
 
     // pass a reference to the current screen.
-    let cursor = crossterm.cursor();
     let color = crossterm.color();
-    let terminal = crossterm.terminal();
     let terminal = crossterm.input();
     let style = crossterm
         .style("Black text on green background")

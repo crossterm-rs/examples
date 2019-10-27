@@ -1,6 +1,6 @@
 use std::io::{stdout, Write};
 
-use crossterm::{queue, Colorize, Goto, PrintStyledFont, Result};
+use crossterm::{queue, Colorize, MoveTo, PrintStyledFont, Result};
 use rand::{
     self,
     distributions::{IndependentSample, Range},

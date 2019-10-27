@@ -1,6 +1,6 @@
 use std::io::{stdout, Write};
 
-use crossterm::{queue, Color, Crossterm, Goto, PrintStyledFont, Result};
+use crossterm::{queue, Color, Crossterm, MoveTo, PrintStyledFont, Result};
 
 use super::variables::{Cell, Position, Size};
 

@@ -3,8 +3,9 @@ use std::iter::Iterator;
 use std::{thread, time};
 
 use crossterm::{
-    color, cursor, execute, input, style, terminal, AlternateScreen, Clear, ClearType, Color, Goto,
-    Hide, InputEvent, KeyEvent, Output, PrintStyledFont, RawScreen, Result, SetBg, SetFg, SetSize,
+    color, cursor, execute, input, style, terminal, AlternateScreen, Clear, ClearType, Color, Hide,
+    InputEvent, KeyEvent, MoveTo, Output, PrintStyledFont, RawScreen, Result, SetBg, SetFg,
+    SetSize,
 };
 
 use self::variables::{Position, Size};

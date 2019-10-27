@@ -3,7 +3,7 @@
 use std::io::Write;
 use std::{thread, time};
 
-use crossterm::{execute, Color, Colorize, Goto, Hide, PrintStyledFont, Result, SetBg, SetFg};
+use crossterm::{execute, Color, Colorize, Hide, MoveTo, PrintStyledFont, Result, SetBg, SetFg};
 use rand;
 use rand::distributions::{IndependentSample, Range};
 
