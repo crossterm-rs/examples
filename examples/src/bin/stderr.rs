@@ -9,8 +9,8 @@
 use std::io::{stderr, Write};
 
 use crossterm::{
-    input, queue, EnterAlternateScreen, Hide, LeaveAlternateScreen, MoveTo, Output, RawScreen,
-    Result, Show,
+    cursor::{Hide, MoveTo, Show},
+    input, queue, EnterAlternateScreen, LeaveAlternateScreen, Output, RawScreen, Result,
 };
 
 const TEXT: &str = r#"
@@ -39,24 +39,29 @@ Hit any key to quit this screen:
 Any other key will print this text (so that you may copy-paste)
 "#;
 
-fn run_app<W>(w: &mut W) -> Result<char>
+fn run_app<W>(write: &mut W) -> Result<char>
 where
     W: Write,
 {
-    queue!(w, EnterAlternateScreen)?;
-    queue!(w, Hide)?; // hiding the cursor
+    queue!(
+        w,
+        EnterAlternateScreen, // enter alternate screen
+        Hide                  // hide the cursor
+    )?;
+
     let mut y = 1;
     for line in TEXT.split('\n') {
-        queue!(w, Goto(1, y))?;
-        queue!(w, Output(line.to_string()))?;
+        queue!(w, MoveTo(1, y), Output(line.to_string()))?;
         y += 1;
     }
-    w.flush()?;
+
+    write.flush()?;
+
     let _raw = RawScreen::into_raw_mode()?;
     let user_char = input().read_char()?; // we wait for the user to hit a key
-    queue!(w, Show)?; // we must restore the cursor
-    queue!(w, LeaveAlternateScreen)?;
-    w.flush()?;
+    queue!(w, Show, LeaveAlternateScreen)?; // restore the cursor and leave the alternate screen
+
+    write.flush()?;
     Ok(user_char)
 }
 

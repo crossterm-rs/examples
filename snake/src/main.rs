@@ -9,8 +9,10 @@ use std::iter::Iterator;
 use std::{thread, time};
 
 use crossterm::{
-    execute, input, style, AsyncReader, Clear, ClearType, Color, Crossterm, InputEvent, KeyEvent,
-    MoveTo, PrintStyledFont, RawScreen, Result, Show,
+    cursor::{MoveTo, Show},
+    execute, input, style,
+    terminal::{Clear, ClearType},
+    AsyncReader, Color, Crossterm, InputEvent, KeyEvent, PrintStyledFont, RawScreen, Result,
 };
 
 use map::Map;
