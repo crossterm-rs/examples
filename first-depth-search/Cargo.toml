@@ -12,5 +12,5 @@ readme = "README.md"
 edition = "2018"
 
 [dependencies]
-crossterm = { path = "../../crossterm" }
+crossterm = { git = "https://github.com/crossterm-rs/crossterm" }
 rand = "0.4"
