@@ -1,3 +1,4 @@
+use std::io::stdout;
 use std::sync::{Arc, Mutex};
 use std::{thread, time};
 
@@ -9,7 +10,6 @@ use crossterm::{
     terminal::{self, Clear, ClearType},
     ExecutableCommand, Output, Result,
 };
-use std::io::stdout;
 
 fn log(input_buf: Arc<Mutex<String>>) -> Result<Vec<thread::JoinHandle<()>>> {
     let mut threads = Vec::with_capacity(10);

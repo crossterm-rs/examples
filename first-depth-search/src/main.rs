@@ -2,6 +2,7 @@ use std::io::{stdout, Write};
 use std::iter::Iterator;
 use std::{thread, time};
 
+use crossterm::style::ResetColor;
 use crossterm::{
     cursor::{Hide, MoveTo, Show},
     execute,
@@ -14,7 +15,6 @@ use crossterm::{
 };
 
 use self::variables::{Position, Size};
-use crossterm::style::ResetColor;
 
 mod algorithm;
 mod map;

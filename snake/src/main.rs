@@ -8,6 +8,7 @@ use std::io::{stdout, Write};
 use std::iter::Iterator;
 use std::{thread, time};
 
+use crossterm::cursor::Hide;
 use crossterm::{
     cursor::{MoveTo, Show},
     execute,
@@ -18,7 +19,6 @@ use crossterm::{
     Result,
 };
 
-use crossterm::cursor::Hide;
 use map::Map;
 use snake::Snake;
 use types::Direction;

@@ -4,6 +4,8 @@
 
 #![allow(dead_code)]
 
+use std::io::{stdout, Write};
+
 use crossterm::{
     cursor::{
         self, DisableBlinking, EnableBlinking, Hide, MoveDown, MoveLeft, MoveRight, MoveTo, MoveUp,
@@ -11,7 +13,6 @@ use crossterm::{
     },
     execute, Result,
 };
-use std::io::{stdout, Write};
 
 /// Set the cursor to position X: 10, Y: 5 in the terminal.
 fn goto() -> Result<()> {

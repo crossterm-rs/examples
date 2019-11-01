@@ -4,13 +4,14 @@
 
 #![allow(dead_code)]
 
+use std::io::{stdout, Write};
+
 use crossterm::{
     cursor::MoveTo,
     execute,
     terminal::{self, Clear, ClearType, ScrollDown, ScrollUp, SetSize},
     Result,
 };
-use std::io::{stdout, Write};
 
 fn print_test_data() {
     for i in 0..100 {
