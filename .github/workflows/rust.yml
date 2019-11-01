@@ -50,7 +50,3 @@ jobs:
     - name: Test all features
       run: cargo test --all-features --no-default-features -- --nocapture --test-threads 1
       continue-on-error: ${{ matrix.can-fail }}
-    - name: Test Packaging
-      if: matrix.rust == 'stable'
-      run: cargo package
-      continue-on-error: ${{ matrix.can-fail }}
