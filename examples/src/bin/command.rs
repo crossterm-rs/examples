@@ -81,7 +81,7 @@ fn later_execution_command_directly_using_macros() -> Result<()> {
     Ok(())
 }
 
-// cargo run --example command
+ cargo run --example command
 fn main() -> Result<()> {
     later_execution_command_directly_using_macros()
     //    later_execution_command_using_functions()
