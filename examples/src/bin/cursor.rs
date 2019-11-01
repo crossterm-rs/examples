@@ -96,5 +96,5 @@ fn blink_cursor() -> Result<()> {
 
 // cargo run --example cursor
 fn main() -> Result<()> {
-    blink_cursor();
+    blink_cursor()
 }

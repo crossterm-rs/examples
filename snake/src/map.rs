@@ -1,6 +1,6 @@
 use std::io::{stdout, Write};
 
-use crossterm::{queue, Colorize, MoveTo, PrintStyledFont, Result};
+use crossterm::{cursor::MoveTo, queue, style::Colorize, style::PrintStyledContent, Result};
 use rand::{
     self,
     distributions::{IndependentSample, Range},
@@ -25,8 +25,8 @@ impl Food {
     fn draw(&self) -> Result<()> {
         queue!(
             stdout(),
-            Goto(self.position.x, self.position.y),
-            PrintStyledFont("❖".green())
+            MoveTo(self.position.x, self.position.y),
+            PrintStyledContent("❖".green())
         )
     }
 }
@@ -56,19 +56,19 @@ impl Map {
         for y in 0..self.height {
             queue!(
                 stdout(),
-                Goto(0, y),
-                PrintStyledFont("█".magenta()),
-                Goto(self.width - 1, y),
-                PrintStyledFont("█".magenta())
+                MoveTo(0, y),
+                PrintStyledContent("█".magenta()),
+                MoveTo(self.width - 1, y),
+                PrintStyledContent("█".magenta())
             )?;
         }
         for x in 0..self.width {
             queue!(
                 stdout(),
-                Goto(x, 0),
-                PrintStyledFont("█".magenta()),
-                Goto(x, self.height - 1),
-                PrintStyledFont("█".magenta())
+                MoveTo(x, 0),
+                PrintStyledContent("█".magenta()),
+                MoveTo(x, self.height - 1),
+                PrintStyledContent("█".magenta())
             )?;
         }
         Ok(())

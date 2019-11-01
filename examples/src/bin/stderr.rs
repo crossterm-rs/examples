@@ -10,7 +10,10 @@ use std::io::{stderr, Write};
 
 use crossterm::{
     cursor::{Hide, MoveTo, Show},
-    input, queue, EnterAlternateScreen, LeaveAlternateScreen, Output, RawScreen, Result,
+    input::input,
+    queue,
+    screen::{EnterAlternateScreen, LeaveAlternateScreen, RawScreen},
+    Output, Result,
 };
 
 const TEXT: &str = r#"
@@ -44,14 +47,14 @@ where
     W: Write,
 {
     queue!(
-        w,
+        write,
         EnterAlternateScreen, // enter alternate screen
         Hide                  // hide the cursor
     )?;
 
     let mut y = 1;
     for line in TEXT.split('\n') {
-        queue!(w, MoveTo(1, y), Output(line.to_string()))?;
+        queue!(write, MoveTo(1, y), Output(line.to_string()))?;
         y += 1;
     }
 
@@ -59,7 +62,7 @@ where
 
     let _raw = RawScreen::into_raw_mode()?;
     let user_char = input().read_char()?; // we wait for the user to hit a key
-    queue!(w, Show, LeaveAlternateScreen)?; // restore the cursor and leave the alternate screen
+    queue!(write, Show, LeaveAlternateScreen)?; // restore the cursor and leave the alternate screen
 
     write.flush()?;
     Ok(user_char)

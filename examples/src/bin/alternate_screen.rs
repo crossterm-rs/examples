@@ -5,10 +5,11 @@ use std::{
 
 use crossterm::{
     cursor::{Hide, MoveTo, Show},
-    execute, style,
+    execute,
+    screen::AlternateScreen,
+    style::{style, Color, PrintStyledContent},
     terminal::{Clear, ClearType},
-    utils::Output,
-    AlternateScreen, Color, PrintStyledFont, Result,
+    Output, Result,
 };
 
 fn print_wait_screen() -> Result<()> {
@@ -31,7 +32,7 @@ fn print_wait_screen() -> Result<()> {
         execute!(
             stdout(),
             MoveTo(10, 2),
-            PrintStyledFont(
+            PrintStyledContent(
                 style(format!("{} of the 5 items processed", i))
                     .with(Color::Red)
                     .on(Color::Blue)

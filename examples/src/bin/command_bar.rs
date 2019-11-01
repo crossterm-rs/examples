@@ -4,9 +4,10 @@ use std::{thread, time};
 use crossterm::cursor::{Hide, Show};
 use crossterm::{
     cursor::MoveTo,
-    input,
+    input::{input, InputEvent, KeyEvent},
+    screen::RawScreen,
     terminal::{self, Clear, ClearType},
-    ExecutableCommand, InputEvent, KeyEvent, Output, RawScreen, Result,
+    ExecutableCommand, Output, Result,
 };
 use std::io::stdout;
 

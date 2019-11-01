@@ -9,9 +9,11 @@ use std::{
 
 use crossterm::{
     cursor::{Hide, MoveTo, Show},
-    queue, style,
+    queue,
+    screen::{EnterAlternateScreen, LeaveAlternateScreen},
+    style::{style, Color, PrintStyledContent},
     terminal::{Clear, ClearType},
-    Color, EnterAlternateScreen, LeaveAlternateScreen, Output, PrintStyledFont, Result,
+    Output, Result,
 };
 
 /// manage the wait screen, using the provided Writer, which
@@ -41,7 +43,7 @@ where
         queue!(w, MoveTo(10, 2))?;
         queue!(
             w,
-            PrintStyledFont(
+            PrintStyledContent(
                 style(format!("{} of the {} items processed", i, items))
                     .with(Color::Red)
                     .on(Color::Blue)

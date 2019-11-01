@@ -2,7 +2,11 @@
 
 use std::{thread, time::Duration};
 
-use crossterm::{input, InputEvent, KeyEvent, MouseButton, MouseEvent, RawScreen, Result};
+use crossterm::{
+    input::{input, InputEvent, KeyEvent, MouseButton, MouseEvent},
+    screen::RawScreen,
+    Result,
+};
 
 fn process_input_event(key_event: InputEvent) -> bool {
     match key_event {

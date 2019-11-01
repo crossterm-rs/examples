@@ -3,12 +3,18 @@ use std::iter::Iterator;
 use std::{thread, time};
 
 use crossterm::{
-    color, cursor, execute, input, style, terminal, AlternateScreen, Clear, ClearType, Color, Hide,
-    InputEvent, KeyEvent, MoveTo, Output, PrintStyledFont, RawScreen, Result, SetBg, SetFg,
-    SetSize,
+    cursor::{Hide, MoveTo, Show},
+    execute,
+    input::input,
+    input::{InputEvent, KeyEvent},
+    screen::{AlternateScreen, RawScreen},
+    style::{style, Color, PrintStyledContent, SetBackgroundColor, SetForegroundColor},
+    terminal::{self, Clear, ClearType, SetSize},
+    Output, Result,
 };
 
 use self::variables::{Position, Size};
+use crossterm::style::ResetColor;
 
 mod algorithm;
 mod map;
@@ -51,14 +57,14 @@ fn print_welcome_screen() -> Result<()> {
         stdout(),
         SetSize(110, 60),
         Clear(ClearType::All),
-        Goto(0, 0),
-        PrintStyledFont(
+        MoveTo(0, 0),
+        PrintStyledContent(
             style(format!("{}", messages::WELCOME_MESSAGE.join("\n\r"))).with(Color::Cyan)
         ),
         Hide,
-        Goto(0, 10),
+        MoveTo(0, 10),
         Output("The first depth search algorithm will start in:   Seconds".to_string()),
-        Goto(0, 11),
+        MoveTo(0, 11),
         Output("Press `q` to abort the program".to_string())
     )?;
 
@@ -68,20 +74,20 @@ fn print_welcome_screen() -> Result<()> {
     for i in (1..5).rev() {
         if let Some(InputEvent::Keyboard(KeyEvent::Char('q'))) = stdin.next() {
             exit()?;
-            terminal().exit();
+            terminal::exit();
             break;
         } else {
             // print the current counter at the line of `Seconds to Go: {counter}`
             execute!(
                 stdout(),
-                Goto(48, 10),
-                SetFg(Color::Red),
-                SetBg(Color::Blue),
+                MoveTo(48, 10),
+                SetForegroundColor(Color::Red),
+                SetBackgroundColor(Color::Blue),
                 Output(i.to_string())
             )?;
         }
 
-        color().reset()?;
+        execute!(stdout(), ResetColor)?;
 
         // 1 second delay
         thread::sleep(time::Duration::from_secs(1));
@@ -92,6 +98,6 @@ fn print_welcome_screen() -> Result<()> {
 
 fn exit() -> Result<()> {
     RawScreen::disable_raw_mode()?;
-    cursor().show()?;
-    color().reset()
+    execute!(stdout(), Show, ResetColor)?;
+    Ok(())
 }

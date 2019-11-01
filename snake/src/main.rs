@@ -10,11 +10,15 @@ use std::{thread, time};
 
 use crossterm::{
     cursor::{MoveTo, Show},
-    execute, input, style,
-    terminal::{Clear, ClearType},
-    AsyncReader, Color, Crossterm, InputEvent, KeyEvent, PrintStyledFont, RawScreen, Result,
+    execute,
+    input::{input, AsyncReader, InputEvent, KeyEvent},
+    screen::RawScreen,
+    style::{style, Color, PrintStyledContent},
+    terminal::{self, Clear, ClearType},
+    Result,
 };
 
+use crossterm::cursor::Hide;
 use map::Map;
 use snake::Snake;
 use types::Direction;
@@ -35,13 +39,12 @@ pub enum Event {
 
 fn main() -> Result<()> {
     // Print the welcome screen and ask for the map size.
-    let crossterm = Crossterm::new();
-    let (map_width, map_height) = ask_for_map_size(crossterm.terminal().size()?)?;
+    let (map_width, map_height) = ask_for_map_size(terminal::size()?)?;
 
     // Switch screen to the raw mode to avoid printing key presses on the screen
     // and hide the cursor.
     let _raw = RawScreen::into_raw_mode();
-    crossterm.cursor().hide()?;
+    execute!(stdout(), Hide)?;
 
     // Draw the map border.
     let mut map = Map::new(map_width, map_height);
@@ -53,7 +56,7 @@ fn main() -> Result<()> {
     map.spawn_food(&snake)?;
 
     // Game loop
-    let mut stdin = crossterm.input().read_async();
+    let mut stdin = input().read_async();
     loop {
         // Handle the next user input event (if there's any).
         match next_event(&mut stdin, snake.direction()) {
@@ -129,9 +132,9 @@ fn ask_for_map_dimension(name: &str, min: u16, default_max: u16, pos: (u16, u16)
 
     execute!(
         stdout(),
-        Goto(pos.0, pos.1),
-        PrintStyledFont(style(message).with(Color::Green)),
-        Goto(pos.0 + message_len + 1, pos.1)
+        MoveTo(pos.0, pos.1),
+        PrintStyledContent(style(message).with(Color::Green)),
+        MoveTo(pos.0 + message_len + 1, pos.1)
     )?;
 
     let dimension = input()
@@ -158,8 +161,8 @@ fn ask_for_map_size(terminal_size: (u16, u16)) -> Result<(u16, u16)> {
     execute!(
         stdout(),
         Clear(ClearType::All),
-        Goto(0, row),
-        PrintStyledFont(style(format!("{}", messages::SNAKE.join("\n\r"))).with(Color::Cyan))
+        MoveTo(0, row),
+        PrintStyledContent(style(format!("{}", messages::SNAKE.join("\n\r"))).with(Color::Cyan))
     )?;
 
     row += messages::SNAKE.len() as u16 + 2;
@@ -177,13 +180,13 @@ fn show_game_over_screen(score: usize) -> Result<()> {
     execute!(
         stdout(),
         Clear(ClearType::All),
-        Goto(0, 0),
-        PrintStyledFont(style(format!("{}", messages::GAME_OVER.join("\n\r"))).with(Color::Red)),
-        Goto(0, messages::GAME_OVER.len() as u16 + 2),
-        PrintStyledFont(
+        MoveTo(0, 0),
+        PrintStyledContent(style(format!("{}", messages::GAME_OVER.join("\n\r"))).with(Color::Red)),
+        MoveTo(0, messages::GAME_OVER.len() as u16 + 2),
+        PrintStyledContent(
             style(format!("Your score is {}. You can do better!", score)).with(Color::Red)
         ),
         Show,
-        Goto(0, messages::GAME_OVER.len() as u16 + 4)
+        MoveTo(0, messages::GAME_OVER.len() as u16 + 4)
     )
 }

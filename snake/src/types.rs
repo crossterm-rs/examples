@@ -2,7 +2,13 @@ use std::convert::TryFrom;
 use std::fmt::Display;
 use std::io::{stdout, Write};
 
-use crossterm::{style, Color, Crossterm, KeyEvent, Result, TerminalCursor};
+use crossterm::{
+    cursor::MoveTo,
+    execute,
+    input::KeyEvent,
+    style::{style, Color, PrintStyledContent},
+    Output, Result,
+};
 
 /// Position in the terminal window.
 #[derive(Copy, Clone, Debug, PartialOrd, PartialEq)]
@@ -21,19 +27,17 @@ impl Position {
 
     /// Draws the given `value` at this position.
     pub fn draw<D: Display + Clone>(&self, value: D) -> Result<()> {
-        let cursor = TerminalCursor::new();
-        cursor.goto(self.x, self.y)?;
-
-        print!("{}", style(value).with(Color::Red));
-        stdout().flush()?;
+        execute!(
+            stdout(),
+            MoveTo(self.x, self.y),
+            PrintStyledContent(style(value).with(Color::Red))
+        )?;
         Ok(())
     }
 
     /// Clears character (writes single space) at this position.
     pub fn clear_char(&self) -> Result<()> {
-        let crossterm = Crossterm::new();
-        crossterm.cursor().goto(self.x, self.y)?;
-        crossterm.terminal().write(" ")?;
+        execute!(stdout(), MoveTo(self.x, self.y), Output(" "))?;
         Ok(())
     }
 }

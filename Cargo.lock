@@ -13,18 +13,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 [[package]]
 name = "crossterm"
 version = "0.12.1"
-source = "git+https://github.com/crossterm-rs/crossterm#ea7130a41975735dd9526ac3b7eb1869b32c3c66"
-dependencies = [
- "crossterm_winapi 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)",
- "lazy_static 1.4.0 (registry+https://github.com/rust-lang/crates.io-index)",
- "libc 0.2.62 (registry+https://github.com/rust-lang/crates.io-index)",
- "mio 0.6.19 (registry+https://github.com/rust-lang/crates.io-index)",
- "winapi 0.3.8 (registry+https://github.com/rust-lang/crates.io-index)",
-]
-
-[[package]]
-name = "crossterm"
-version = "0.12.1"
 dependencies = [
  "crossterm_winapi 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "lazy_static 1.4.0 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -37,7 +25,7 @@ dependencies = [
 name = "crossterm-examples"
 version = "0.0.1"
 dependencies = [
- "crossterm 0.12.1 (git+https://github.com/crossterm-rs/crossterm)",
+ "crossterm 0.12.1",
 ]
 
 [[package]]
@@ -235,7 +223,6 @@ dependencies = [
 [metadata]
 "checksum bitflags 1.2.1 (registry+https://github.com/rust-lang/crates.io-index)" = "cf1de2fe8c75bc145a2f577add951f8134889b4795d47466a54a5c846d691693"
 "checksum cfg-if 0.1.10 (registry+https://github.com/rust-lang/crates.io-index)" = "4785bdd1c96b2a846b2bd7cc02e86b6b3dbf14e7e53446c4f54c92a361040822"
-"checksum crossterm 0.12.1 (git+https://github.com/crossterm-rs/crossterm)" = "<none>"
 "checksum crossterm_winapi 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)" = "df25e92a352488d9b3e0215e4e99402945993026159f98b477047719f16a6530"
 "checksum fuchsia-cprng 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)" = "a06f77d526c1a601b7c4cdd98f54b5eaabffc14d5f2f0296febdc7f357c6d3ba"
 "checksum fuchsia-zircon 0.3.3 (registry+https://github.com/rust-lang/crates.io-index)" = "2e9763c69ebaae630ba35f74888db465e49e259ba1bc0eda7d06f4a067615d82"

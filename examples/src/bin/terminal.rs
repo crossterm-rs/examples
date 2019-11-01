@@ -5,10 +5,9 @@
 #![allow(dead_code)]
 
 use crossterm::{
-    cursor,
-    cursor::Goto,
+    cursor::MoveTo,
     execute,
-    terminal::{self, Clear, ClearType, ScrollDown, ScrollUp},
+    terminal::{self, Clear, ClearType, ScrollDown, ScrollUp, SetSize},
     Result,
 };
 use std::io::{stdout, Write};
@@ -32,7 +31,7 @@ fn clear_from_cursor_down() -> Result<()> {
     print_test_data();
 
     // Clear all cells from current cursor position down.
-    execute!(stdout(), Goto(4, 8), Clear(ClearType::FromCursorDown))
+    execute!(stdout(), MoveTo(4, 8), Clear(ClearType::FromCursorDown))
 }
 
 /// Clear all lines from cursor position X:4, Y:4 up | demonstration
@@ -40,7 +39,7 @@ fn clear_from_cursor_up() -> Result<()> {
     print_test_data();
 
     // Clear all cells from current cursor position down.
-    execute!(stdout(), Goto(4, 4), Clear(ClearType::FromCursorUp))
+    execute!(stdout(), MoveTo(4, 4), Clear(ClearType::FromCursorUp))
 }
 
 /// Clear all lines from cursor position X:4, Y:4 up | demonstration
@@ -48,7 +47,7 @@ fn clear_current_line() -> Result<()> {
     print_test_data();
 
     // Clear current line cells.
-    execute!(stdout(), Goto(4, 3), Clear(ClearType::CurrentLine))
+    execute!(stdout(), MoveTo(4, 3), Clear(ClearType::CurrentLine))
 }
 
 /// Clear all lines from cursor position X:4, Y:7 up | demonstration
@@ -56,7 +55,7 @@ fn clear_until_new_line() -> Result<()> {
     print_test_data();
 
     // Clear all the cells until next line.
-    execute!(stdout(), Goto(4, 20), Clear(ClearType::UntilNewLine))
+    execute!(stdout(), MoveTo(4, 20), Clear(ClearType::UntilNewLine))
 }
 
 /// Print the the current terminal size | demonstration.
