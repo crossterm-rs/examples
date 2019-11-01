@@ -1,6 +1,11 @@
 use std::io::{stdout, Write};
 
-use crossterm::{queue, Color, Crossterm, Goto, PrintStyledFont, Result};
+use crossterm::{
+    cursor::MoveTo,
+    queue,
+    style::{style, Color, PrintStyledContent},
+    Result,
+};
 
 use super::variables::{Cell, Position, Size};
 
@@ -46,8 +51,6 @@ impl Map {
 
     // render the map on the screen.
     pub fn render_map(&mut self) -> Result<()> {
-        let crossterm = Crossterm::new();
-
         for row in self.map.iter_mut() {
             for column in row.iter_mut() {
                 // we only have to render the walls
@@ -56,8 +59,8 @@ impl Map {
                 {
                     queue!(
                         stdout(),
-                        Goto(column.position.x as u16, column.position.y as u16),
-                        PrintStyledFont(crossterm.style(column.look).on(column.color))
+                        MoveTo(column.position.x as u16, column.position.y as u16),
+                        PrintStyledContent(style(column.look).on(column.color))
                     )?;
                 }
             }

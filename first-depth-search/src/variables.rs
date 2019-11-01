@@ -1,4 +1,4 @@
-use crossterm::Color;
+use crossterm::style::Color;
 
 #[derive(Copy, Clone, Debug)]
 pub enum Direction {

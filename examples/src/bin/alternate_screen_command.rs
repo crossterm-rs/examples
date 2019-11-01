@@ -8,8 +8,12 @@ use std::{
 };
 
 use crossterm::{
-    queue, style, Clear, ClearType, Color, EnterAlternateScreen, Goto, Hide, LeaveAlternateScreen,
-    Output, PrintStyledFont, Result, Show,
+    cursor::{Hide, MoveTo, Show},
+    queue,
+    screen::{EnterAlternateScreen, LeaveAlternateScreen},
+    style::{style, Color, PrintStyledContent},
+    terminal::{Clear, ClearType},
+    Output, Result,
 };
 
 /// manage the wait screen, using the provided Writer, which
@@ -21,7 +25,7 @@ where
     queue!(w, EnterAlternateScreen)?;
     queue!(w, Hide)?;
     queue!(w, Clear(ClearType::All))?;
-    queue!(w, Goto(0, 0))?;
+    queue!(w, MoveTo(0, 0))?;
     queue!(
         w,
         Output(
@@ -36,10 +40,10 @@ where
     let items = 5;
     for i in 1..=items {
         // print the current counter at the line of `Seconds to Go: {counter}`
-        queue!(w, Goto(10, 2))?;
+        queue!(w, MoveTo(10, 2))?;
         queue!(
             w,
-            PrintStyledFont(
+            PrintStyledContent(
                 style(format!("{} of the {} items processed", i, items))
                     .with(Color::Red)
                     .on(Color::Blue)

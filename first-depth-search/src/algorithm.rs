@@ -1,9 +1,14 @@
 //! Implementation of the first depth search algorithm
 
-use std::io::Write;
+use std::io::{stdout, Write};
 use std::{thread, time};
 
-use crossterm::{execute, Color, Colorize, Goto, Hide, PrintStyledFont, Result, SetBg, SetFg};
+use crossterm::{
+    cursor::{Hide, MoveTo},
+    execute,
+    style::{Color, Colorize, PrintStyledContent, SetBackgroundColor, SetForegroundColor},
+    Result,
+};
 use rand;
 use rand::distributions::{IndependentSample, Range};
 
@@ -36,10 +41,10 @@ impl FirstDepthSearch {
         self.stack.push(self.root_pos);
 
         execute!(
-            ::std::io::stdout(),
+            stdout(),
             Hide,
-            SetFg(Color::Green),
-            SetBg(Color::Black)
+            SetForegroundColor(Color::Green),
+            SetBackgroundColor(Color::Black)
         )?;
 
         // loop until there are now items left in the stack.
@@ -63,8 +68,8 @@ impl FirstDepthSearch {
 
             execute!(
                 ::std::io::stdout(),
-                Goto(x, y),
-                PrintStyledFont(" ".on_yellow())
+                MoveTo(x, y),
+                PrintStyledContent(" ".on_yellow())
             )?;
 
             thread::sleep(time::Duration::from_millis(1));
