@@ -3,7 +3,7 @@
 use std::{thread, time::Duration};
 
 use crossterm::{
-    input::{input, InputEvent, KeyEvent, MouseButton, MouseEvent},
+    event::{input, InputEvent, KeyEvent, MouseButton, MouseEvent},
     screen::RawScreen,
     Result,
 };

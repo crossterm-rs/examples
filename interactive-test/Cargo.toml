@@ -1,18 +1,13 @@
 [package]
-name = "interactive-test"
+name = "crossterm-interactive-test"
 version = "0.0.1"
-authors = ["Robert Vojta <rvojta@me.com>"]
+authors = ["T. Post", "Robert Vojta <rvojta@me.com>"]
 edition = "2018"
-description = "Interactive test for the anes."
-repository = "https://github.com/zrzka/anes-rs"
-documentation = "https://docs.rs/anes/"
-license = "MIT OR Apache-2.0"
+description = "Interactive test for crossterm."
+license = "MIT"
 exclude = ["target", "Cargo.lock"]
 readme = "README.md"
 publish = false
-
-[badges]
-maintenance = { status = "experimental" }
 
 [dependencies]
 crossterm = {git="https://github.com/crossterm-rs/crossterm"}

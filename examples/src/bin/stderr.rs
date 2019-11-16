@@ -10,7 +10,7 @@ use std::io::{stderr, Write};
 
 use crossterm::{
     cursor::{Hide, MoveTo, Show},
-    input::input,
+    event::input,
     queue,
     screen::{EnterAlternateScreen, LeaveAlternateScreen, RawScreen},
     Output, Result,

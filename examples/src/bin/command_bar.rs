@@ -5,7 +5,7 @@ use std::{thread, time};
 use crossterm::cursor::{Hide, Show};
 use crossterm::{
     cursor::MoveTo,
-    input::{input, InputEvent, KeyEvent},
+    event::{input, InputEvent, KeyEvent},
     screen::RawScreen,
     terminal::{self, Clear, ClearType},
     ExecutableCommand, Output, Result,
