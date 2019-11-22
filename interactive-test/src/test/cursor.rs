@@ -1,8 +1,10 @@
+#![allow(clippy::cognitive_complexity)]
+
 use std::io::Write;
 
 use crate::{MoveCursorToColumn, MoveCursorToNextLine, MoveCursorToPreviousLine, Result};
 use crossterm::cursor::MoveTo;
-use crossterm::{cursor, execute, queue, style, style::Colorize, Command, Output};
+use crossterm::{cursor, execute, queue, style, style::Colorize, Command};
 use std::thread;
 use std::time::Duration;
 
@@ -65,28 +67,36 @@ fn test_hide_cursor<W>(w: &mut W) -> Result<()>
 where
     W: Write,
 {
-    execute!(w, Output("HideCursor"), cursor::Hide)
+    execute!(w, style::Print("HideCursor"), cursor::Hide)
 }
 
 fn test_show_cursor<W>(w: &mut W) -> Result<()>
 where
     W: Write,
 {
-    execute!(w, Output("ShowCursor"), cursor::Show)
+    execute!(w, style::Print("ShowCursor"), cursor::Show)
 }
 
 fn test_enable_cursor_blinking<W>(w: &mut W) -> Result<()>
 where
     W: Write,
 {
-    execute!(w, Output("EnableCursorBlinking"), cursor::EnableBlinking)
+    execute!(
+        w,
+        style::Print("EnableCursorBlinking"),
+        cursor::EnableBlinking
+    )
 }
 
 fn test_disable_cursor_blinking<W>(w: &mut W) -> Result<()>
 where
     W: Write,
 {
-    execute!(w, Output("DisableCursorBlinking"), cursor::DisableBlinking)
+    execute!(
+        w,
+        style::Print("DisableCursorBlinking"),
+        cursor::DisableBlinking
+    )
 }
 
 fn test_move_cursor_to<W>(w: &mut W) -> Result<()>
@@ -106,18 +116,18 @@ where
 {
     execute!(w,
         cursor::MoveTo(0, 0),
-        Output("Save position, print character else were, after three seconds restore to old position."),
+        style::Print("Save position, print character else were, after three seconds restore to old position."),
         MoveCursorToNextLine(2),
-        Output("Save ->[ ]<- Position"),
+        style::Print("Save ->[ ]<- Position"),
         cursor::MoveTo(8, 2),
         cursor::SavePosition,
         cursor::MoveTo(10,10),
-        Output("Move To ->[√]<- Position")
+        style::Print("Move To ->[√]<- Position")
     )?;
 
     thread::sleep(Duration::from_secs(3));
 
-    execute!(w, cursor::RestorePosition, Output("√"))
+    execute!(w, cursor::RestorePosition, style::Print("√"))
 }
 
 /// Draws  a box with an colored center, this center can be taken as a reference point after running the given cursor command.
@@ -132,7 +142,7 @@ where
         cursor::Hide,
         cursor::MoveTo(0, 0),
         style::SetForegroundColor(style::Color::Red),
-        Output(format!(
+        style::Print(format!(
             "Red box is the center. After the action: '{}' another box is drawn.",
             description
         ))
@@ -176,7 +186,6 @@ where
     Ok(())
 }
 
-#[allow(clippy::cognitive_complexity)]
 pub fn run<W>(w: &mut W) -> Result<()>
 where
     W: Write,

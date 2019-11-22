@@ -1,5 +1,7 @@
+#![allow(clippy::cognitive_complexity)]
+
 use crate::{MoveCursorToNextLine, Result};
-use crossterm::{cursor, queue, style, style::Color, Output};
+use crossterm::{cursor, queue, style, style::Color};
 use std::io::Write;
 
 const COLORS: [Color; 21] = [
@@ -32,7 +34,7 @@ where
 {
     queue!(
         w,
-        Output("Foreground colors on the black & white background"),
+        style::Print("Foreground colors on the black & white background"),
         MoveCursorToNextLine(2)
     )?;
 
@@ -41,13 +43,13 @@ where
             w,
             style::SetForegroundColor(*color),
             style::SetBackgroundColor(Color::Black),
-            Output(format!(
+            style::Print(format!(
                 "{:>width$} ",
                 format!("{:?} ████████████", color),
                 width = 40
             )),
             style::SetBackgroundColor(Color::White),
-            Output(format!(
+            style::Print(format!(
                 "{:>width$}",
                 format!("{:?} ████████████", color),
                 width = 40
@@ -67,7 +69,7 @@ where
 {
     queue!(
         w,
-        Output("Background colors with black & white foreground"),
+        style::Print("Background colors with black & white foreground"),
         MoveCursorToNextLine(2)
     )?;
 
@@ -76,13 +78,13 @@ where
             w,
             style::SetBackgroundColor(*color),
             style::SetForegroundColor(Color::Black),
-            Output(format!(
+            style::Print(format!(
                 "{:>width$} ",
                 format!("{:?} ▒▒▒▒▒▒▒▒▒▒▒▒", color),
                 width = 40
             )),
             style::SetForegroundColor(Color::White),
-            Output(format!(
+            style::Print(format!(
                 "{:>width$}",
                 format!("{:?} ▒▒▒▒▒▒▒▒▒▒▒▒", color),
                 width = 40
@@ -101,31 +103,35 @@ where
     W: Write,
     F: Fn(u16, u16) -> Color,
 {
-    queue!(w, Output(title))?;
+    queue!(w, style::Print(title))?;
 
     for idx in 0..=15 {
         queue!(
             w,
             cursor::MoveTo(1, idx + 4),
-            Output(format!("{:>width$}", idx, width = 2))
+            style::Print(format!("{:>width$}", idx, width = 2))
         )?;
         queue!(
             w,
             cursor::MoveTo(idx * 3 + 3, 3),
-            Output(format!("{:>width$}", idx, width = 3))
+            style::Print(format!("{:>width$}", idx, width = 3))
         )?;
     }
 
     for row in 0..=15u16 {
         queue!(w, cursor::MoveTo(4, row + 4))?;
         for col in 0..=15u16 {
-            queue!(w, style::SetForegroundColor(color(col, row)), Output("███"))?;
+            queue!(
+                w,
+                style::SetForegroundColor(color(col, row)),
+                style::Print("███")
+            )?;
         }
         queue!(
             w,
             style::SetForegroundColor(Color::White),
-            Output(format!("{:>width$} ..= ", row * 16, width = 3)),
-            Output(format!("{:>width$}", row * 16 + 15, width = 3))
+            style::Print(format!("{:>width$} ..= ", row * 16, width = 3)),
+            style::Print(format!("{:>width$}", row * 16 + 15, width = 3))
         )?;
     }
 
@@ -176,7 +182,6 @@ where
     })
 }
 
-#[allow(clippy::cognitive_complexity)]
 pub fn run<W>(w: &mut W) -> Result<()>
 where
     W: Write,

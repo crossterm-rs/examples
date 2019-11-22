@@ -10,5 +10,5 @@ readme = "README.md"
 publish = false
 
 [dependencies]
-crossterm = {git="https://github.com/crossterm-rs/crossterm"}
+crossterm = { path="../../crossterm" }
 anes = "0.1.4"

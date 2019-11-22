@@ -22,7 +22,7 @@ macro_rules! run_tests {
             match $crate::read_char() {
                 Ok('q') => return Ok(()),
                 Err(e) => return Err(e),
-                _ => {},
+                _ => { },
             };
         )*
     }
