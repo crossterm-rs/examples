@@ -2,7 +2,9 @@
 
 # Crossterm Examples
 
-The examples are compatible with the latest release. When you work with the master branch, checkout the pull request list for up-to-date examples. 
+**The examples crate is deprecated and no longer maintained. All the examples are moved back into the [crossterm repository](https://github.com/crossterm-rs/crossterm)**
+
+This repository can be used for crossterm versions lower then 0.14.
 
 ## Structure
 
