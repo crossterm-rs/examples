@@ -4,7 +4,7 @@
 
 **The examples crate is deprecated and no longer maintained. All the examples are moved back into the [crossterm repository](https://github.com/crossterm-rs/crossterm)**
 
-This repository can be used for crossterm versions lower then 0.14.
+This repository can be used for crossterm versions lower than 0.14.
 
 ## Structure
 
