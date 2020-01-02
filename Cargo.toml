@@ -2,5 +2,6 @@
 members = [
     "examples",
     "first-depth-search",
-    "snake"
+    "snake",
+    "interactive-test"
 ]

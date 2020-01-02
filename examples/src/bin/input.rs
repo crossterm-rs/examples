@@ -1,4 +1,4 @@
-use crossterm::input::input;
+use crossterm::event::input;
 
 fn read_char() {
     let input = input();

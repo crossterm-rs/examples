@@ -1,0 +1,14 @@
+[package]
+name = "crossterm-interactive-test"
+version = "0.0.1"
+authors = ["T. Post", "Robert Vojta <rvojta@me.com>"]
+edition = "2018"
+description = "Interactive test for crossterm."
+license = "MIT"
+exclude = ["target", "Cargo.lock"]
+readme = "README.md"
+publish = false
+
+[dependencies]
+crossterm = { git = "https://github.com/crossterm-rs/crossterm" }
+anes = "0.1.4" # needed till `MoveCursorToNextLine`, `MoveCursorToColumn`, `MoveCursorToPreviousLine` are implemented for crossterm.
